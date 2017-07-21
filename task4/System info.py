@@ -1,62 +1,73 @@
-import os
-import datetime
-import psutil
-import json
-import configparser
+import psutil, json, datetime, time, configparser
 
+config = configparser.ConfigParser()
+config.read('config')
+type = str(config['common']['output'])
+min = int(config['common']['interval'])
 
-def get_host_cpu_stats():
-    return str({
-        'kernel(system)': int(psutil.cpu_times()[2]),
-        'idle': int(psutil.cpu_times()[3]),
-        'user': int(psutil.cpu_times()[0]),
-        'iowait': int(psutil.cpu_times()[4]),
-    })
+if type == 'txt':
+	while True:
+		file = open("logging.txt", "a+")
+		file.seek(0, 0)
+		counter = len(file.readlines())
 
-print("CPU times:\n", get_host_cpu_stats(), "\n")
+		col = ''
+		col += 'SNAPSHOT {}: '.format(counter + 1) + str(datetime.datetime.now().strftime('%m/%d/%Y %H:%M:%S'))
+		col += " - CPU usage (%): {} ".format(psutil.cpu_percent(interval=1))
+		col += "| VirtMemAvailable(MB): {} ".format(psutil.virtual_memory().available // 1024 // 1024)
+		col += "| VirtMemUsed (MB): {} ".format(psutil.virtual_memory().used // 1024 // 1024)
+		col += "| VirtMemTotal (MB): {} ".format(psutil.virtual_memory().total // 1024 // 1024)
+		col += "| Disk: Read (MB): {} ".format(psutil.disk_io_counters().read_bytes // 1024 // 1024)
+		col += "| Disk: Write (MB): {} ".format(psutil.disk_io_counters().write_bytes // 1024 // 1024)
+		col += "| Network: Sent(MB): {} ".format(psutil.net_io_counters(pernic=True)['enp0s25'].bytes_sent // 1024 // 1024)
+		col += "| Network: Recieved(MB): {}\n".format(psutil.net_io_counters(pernic=True)['enp0s25'].bytes_recv // 1024 // 1024)
+		file.write(col)
+		file.close()
 
-def get_host_cpu_times():
-        return str({
-        'cpu1': int(psutil.cpu_percent())
-        })
+elif type == 'json':
+	while True:
+		file = open("logging.json", "a+")
+		file.seek(0, 0)
+		counter = len(file.readlines())
+		if counter == 0:
+			snap = 'SNAPSHOT {}'.format(counter + 1)
+			dateVar = datetime.datetime.now().strftime('%m/%d/%Y %H:%M:%S')
+			cpuVar = psutil.cpu_percent(interval=1)
+			memAvVar = psutil.virtual_memory().available // 1024 // 1024
+			memUsVar = psutil.virtual_memory().used // 1024 // 1024
+			memTotVar = psutil.virtual_memory().total // 1024 // 1024
+			rDisk = psutil.disk_io_counters().read_bytes // 1024 // 1024
+			wDisk = psutil.disk_io_counters().write_bytes // 1024 // 1024
+			sNet = psutil.net_io_counters(pernic=True)['enp0s25'].bytes_sent // 1024 // 1024
+			rNet = psutil.net_io_counters(pernic=True)['enp0s25'].bytes_recv // 1024 // 1024
+			pythonDictionary = {
+			snap: {'Timestamp': dateVar, 'CPU usage (%) ': cpuVar, 'VirtMemAvailable(MB) ': memAvVar,
+					  'VirtMemUsed (MB): ': memUsVar, \
+					  'VirtMemTotal (MB) ': memTotVar, 'Disk: Read (MB) ': rDisk, 'Disk: Write (MB) ': wDisk, \
+					  'Network: Sent (MB) ': sNet, 'Network: Recieved (MB) ': rNet}}
+			json.dump(pythonDictionary, file, indent=4)
+		else:
+			with open('logging.json') as f:
+				data = json.load(f)
 
-print("CPU usage in % trace: ", get_host_cpu_times(), "\n")
+			snapVar = 'SNAPSHOT {}'.format(len(data) + 1)
+			dateVar = datetime.datetime.now().strftime('%m/%d/%Y %H:%M:%S')
+			cpuVar = psutil.cpu_percent(interval=1)
+			memAvVar = psutil.virtual_memory().available // 1024 // 1024
+			memUsVar = psutil.virtual_memory().used // 1024 // 1024
+			memTotVar = psutil.virtual_memory().total // 1024 // 1024
+			rDisk = psutil.disk_io_counters().read_bytes // 1024 // 1024
+			wDisk = psutil.disk_io_counters().write_bytes // 1024 // 1024
+			sNet = psutil.net_io_counters(pernic=True)['enp0s25'].bytes_sent // 1024 // 1024
+			rNet = psutil.net_io_counters(pernic=True)['enp0s25'].bytes_recv // 1024 // 1024
+			pythonDictionary = {
+			snapVar: {'Timestamp': dateVar, 'CPU usage (%) ': cpuVar, 'VirtMemAvailable(MB) ': memAvVar,\
+			'VirtMemUsed (MB): ': memUsVar, 'VirtMemTotal (MB) ': memTotVar, 'Disk: Read (MB) ': rDisk, \
+			'Disk: Write (MB) ': wDisk, 'Network: Sent (MB) ': sNet, 'Network: Recieved (MB) ': rNet}}
+			data.update(pythonDictionary)
 
-def get_host_virt_memory():
-    return str({
-        'total': int(psutil.virtual_memory()[0]),
-        'free': int(psutil.virtual_memory()[4]),
-        'used': int(psutil.virtual_memory()[3]),
-        'persent': int(psutil.virtual_memory()[2])
-    })
+			with open('logging.json', 'w') as f:
+				json.dump(data, f, indent=4)
 
-print("Virtual memory usage: \n", str(get_host_virt_memory()), "\n")
-
-def get_host_disk_partitions():
-    disk = print("Partitions: \n", str(psutil.disk_partitions()), "\n")
-    return disk
-
-print("Disk usage: \n", psutil.disk_usage('/'), "\n")
-print("Network information: \n", psutil.net_io_counters(pernic=True), "\n")
-
-def ConfigSectionMap(section):
-        dict1 = {}
-        options = Config.options(section)
-       for option in options:
-           try:
-                dict1[option] = Config.get(section, option)
-               if dict1[option] == -1:
-                    DebugPrint("skip: %s" % option)
-        except:
-                print("exception on %s!" % option)
-                dict1[option] = None
-        return dict1
-    config_name = ConfigSectionMap("common")['output']
-    config_interval = ConfigSectionMap("common")['interval']
-
-f = open('test.txt', 'w')
-f.write("SNAPSHOT" "\n" "CPU times:\n".format(psutil.cpu_percent(interval=0.1) + "\n""\n"))
-f.write("Virtual memory usage: \n" + get_host_virt_memory() + "\n""\n")
-f.write("Partitions: \n" + str(get_host_disk_partitions() + "\n""\n")
-f.write(str(get_host_cpu_times() + "\n""\n"))
-f.close()
+file.close()
+time.sleep(min*60)

@@ -1,0 +1,89 @@
+{
+    "SNAPSHOT 1": {
+        "Timestamp": "07/21/2017 12:51:28",
+        "CPU usage (%) ": 8.3,
+        "VirtMemAvailable(MB) ": 11867,
+        "VirtMemUsed (MB): ": 3137,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 2": {
+        "Timestamp": "07/21/2017 12:51:29",
+        "CPU usage (%) ": 7.3,
+        "VirtMemAvailable(MB) ": 11867,
+        "VirtMemUsed (MB): ": 3137,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 3": {
+        "Timestamp": "07/21/2017 12:51:30",
+        "CPU usage (%) ": 13.5,
+        "VirtMemAvailable(MB) ": 11866,
+        "VirtMemUsed (MB): ": 3138,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 4": {
+        "Timestamp": "07/21/2017 12:51:31",
+        "CPU usage (%) ": 20.1,
+        "VirtMemAvailable(MB) ": 11858,
+        "VirtMemUsed (MB): ": 3139,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 5": {
+        "Timestamp": "07/21/2017 12:51:32",
+        "CPU usage (%) ": 19.1,
+        "VirtMemAvailable(MB) ": 11858,
+        "VirtMemUsed (MB): ": 3140,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 6": {
+        "Timestamp": "07/21/2017 12:51:33",
+        "CPU usage (%) ": 25.1,
+        "VirtMemAvailable(MB) ": 11857,
+        "VirtMemUsed (MB): ": 3140,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 7": {
+        "Timestamp": "07/21/2017 12:51:34",
+        "CPU usage (%) ": 11.9,
+        "VirtMemAvailable(MB) ": 11857,
+        "VirtMemUsed (MB): ": 3140,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9677,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    },
+    "SNAPSHOT 8": {
+        "Timestamp": "07/21/2017 12:51:35",
+        "CPU usage (%) ": 38.8,
+        "VirtMemAvailable(MB) ": 11856,
+        "VirtMemUsed (MB): ": 3141,
+        "VirtMemTotal (MB) ": 15686,
+        "Disk: Read (MB) ": 4009,
+        "Disk: Write (MB) ": 9678,
+        "Network: Sent (MB) ": 87,
+        "Network: Recieved (MB) ": 1022
+    }
