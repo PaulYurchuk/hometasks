@@ -1,0 +1,3 @@
+[common]
+output = json #could be 'txt' - for logging.txt file
+interval = 5
